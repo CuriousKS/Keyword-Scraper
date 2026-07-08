@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <u><h1><p> RESULT OF SCRAPING </p></h1></u> <br>
+    <title> RESULT OF SCRAPING </title>
+</head>
+<body>
+<p>
+    {% for i in result %}
+        <h2> >> {{i}}  Timestamp {{timestamp}}   </h2>
+        {% for j in result[i] %}
+            <h3> {{j}} </h3>
+         {% endfor %}
+    {% endfor %}
+    
+<form action="/scraper/saveToDB" method="post">
+<h1>
+        <label for="saveToDB">
+        Enter 'y' or 'Y' To Save Data. Enter Anything Else To Discard.
+        </label>
+        <br>
+        <input type="text" id="saveToDB" name="saveToDB"><br>
+
+        <input type="submit">
+ 
+<h1>
+</form>
+
+</p>
+</body>
+</html>
