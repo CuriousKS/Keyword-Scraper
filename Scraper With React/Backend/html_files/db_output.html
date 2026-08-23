@@ -1,42 +1,36 @@
 
 <html>
 <head>
-    <u><h1><p> Your Keyword Collection </p></h1></u>
+    <u><h1><p> Your Keyword Collection </p></h1></u> 
     <h4>Double Click To Delete Any Data</h4>
     <br>
     <title> KEYWORD COLLECTION </title>
 </head>
-<style>
-div{
-cursor: pointer;
-}
-
-</style>
-<body  style='color:black;background-color:brown;'>
+<body  style='color:white;background-color:navy;'>
 <p>
     {% for i in message['scraped_data'] %}
          {% for j in i %}
-      <div class="http://127.0.0.1:8000/db/delete/{{message['scraped_data'][i]['keyword']}}/{{message['scraped_data'][i]['datetime']}}" >
-
+      <div class=http://127.0.0.1:8000/db/delete/{{message['scraped_data'][i]['keyword']}}/{{message['scraped_data'][i]['datetime']}} >  
+      
       <b  style='color:blue;background-color: grey;'  >
         Keyword:  '{{message['scraped_data'][i]['keyword']}}'  {{message['scraped_data'][i]['datetime']}}  </b>  <br><br>
-
-
-
+      
+      
+      
          {% for k in message['scraped_data'][i]['scraped_data'] %}
          {% for a in k %}
          >> <b>{{a}}</b> <br>
          {% for b in k[a]%}
-
+         
          ...............{{b}} <br><br>
-
+                
                 {% endfor %}
              {% endfor %}
-        {% endfor %} <hr></div>
+        {% endfor %} <hr></div>  
+    {% endfor %} 
     {% endfor %}
-    {% endfor %}
-
-
+    
+      
 </p>
 
 <script>
@@ -54,25 +48,25 @@ cursor: pointer;
 
     element1.forEach(async function(i){
 
-
-
-                            i.addEventListener('dblclick',async function(){
+       
+                              
+                            i.addEventListener('dblclick',async function(){ 
                                 if(i.innerHTML != ""){
 
-                                   console.log("deleting...");
+                                   console.log("deleting...");                           
                                    let x=i.className;
                                    console.log(x) ;
                                    let response= await fetch(x,{method:"DELETE"});
                                    console.log(response) ;
-                                   // response=await response.json();
-
-
+                                   // response=await response.json(); 
+                                   
+                                   
                                    console.log(await response.status);
                                    if(response.status==204){
                                     i.innerHTML=""
                                    }}
                                    })
-
+                                                                                                                                    
                                })
 
 

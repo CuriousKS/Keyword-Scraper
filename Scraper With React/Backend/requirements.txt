@@ -3,4 +3,3 @@ tinydb
 fastapi==0.135.4
 fastapi[standard]
 Jinja2==3.1.6
-pandas

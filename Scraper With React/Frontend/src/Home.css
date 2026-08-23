@@ -1,0 +1,82 @@
+        *{
+        box-sizing: border-box;    
+        }
+
+        html,body{
+            height:100%;
+            width:100%;
+            text-align:center;   
+            background-color:firebrick       
+        }
+
+
+
+        h1{
+        color:white
+        }
+
+        div#box1{
+        margin:2%;
+
+        height:50%;
+        width:50%;
+        background-color:yellow;
+        position:absolute;
+        top:27%;
+        left:27%;
+        z-index:9;
+        }
+
+
+        div#box2{
+        height:45%;
+        width:45%;
+        background-color:black;
+        position:absolute;
+        top:25%;
+        left:25%;
+        z-index:80;
+        }
+
+        div#box2:hover{
+        background-color:firebrick;
+        color:purple;
+            label{
+             color:black}
+
+        }
+
+
+
+        input#input1{
+        font-size:75%;    
+        border:none;
+        border-radius:0px;
+        }
+
+
+        button#input2{
+        font-size:65%;    
+        border:none;
+        border-radius:11px;
+        }
+
+
+        div#OutputArea{
+        font-size:25px;
+        background-color:firebrick;
+        color:black;
+        position:absolute;
+        top:90%;
+        
+        z-index:80;
+        text-align:left;
+        }
+
+        button#button{
+        background-color:black;
+        color:white;
+        font-size:75%;    
+        border:none;
+        border-radius:10px;   
+        }

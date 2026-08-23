@@ -4,15 +4,7 @@
     <u><h1><p> RESULT OF SCRAPING </p></h1></u> <br>
     <title> RESULT OF SCRAPING </title>
 </head>
-<style>
-table,th,td{
-border:1px solid black;}
-
-body{
-background-color:brown;
-color:black;
-}
-</style>
+<style>table,th,td{border:1px solid black;}</style>
 <body>
 <p>
 <table style="width=50%">
@@ -21,20 +13,20 @@ color:black;
     <b><th>{{i}}</th></b>
     {% endfor %}
     </tr>
-
+    
     {% for i in range(a) %}
     <tr>
     {% for j in df %}
     <td>{{df[j][i]}}</td>
     {% endfor %}
     </tr>
-
+         
     {% endfor %}
-
+    
 
 
 </table>
-
+ 
 <h1> <div>
 <button>Save This Data</button> </div>
 </h1>
@@ -47,7 +39,7 @@ element.addEventListener('click',async function(){
 
 
                         if(element.innerText=='Save This Data'){
-
+            
                             response=await fetch("http://localhost:8000/scraper/saveToDB",{method:"POST"})
                             // response=await response.json()
                             console.log(response.status)
@@ -56,13 +48,12 @@ element.addEventListener('click',async function(){
                             }
 
                             if(response.status==201){
-                            alert("Your Scraped Data Have Been Saved Successfully!")
                             element.innerHTML="<h3>Your Scraped Data Have Been Saved Successfully!</h3>"
-                            }
-                                                                    }
+                            } 
+                                                                    }  
 
-
+                                                            
                             })
 </script>
 </body>
-</html>
+</html>  

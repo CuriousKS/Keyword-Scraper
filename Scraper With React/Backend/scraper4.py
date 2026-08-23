@@ -13,8 +13,8 @@ import time
 from datetime import datetime
 
 from csv import DictReader
-import pandas as pd
-from tinydb import TinyDB,where
+#import pandas as pd
+from tinydb import TinyDB,where,Query
 
 import json as js
 import copy
@@ -27,9 +27,9 @@ origins = [
     "https://localhost.tiangolo.com",
     "http://localhost",
     "http://localhost:8080",
-    "http://localhost:8000",
-    "http://localhost:8000/scraper/saveToDB",
-    "http://127.0.0.1:8000"
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000"
 ]
 
 app.add_middleware(
@@ -213,29 +213,25 @@ def f5(x:str):
         driver.quit()    
         return output
 
+'''
 @app.get('/',status_code=200)
 def g0(request:Request):
     return templates.TemplateResponse(request,"home.html")
-
+'''
 
 timestamp=''
 keyword_=''
 result=dict()
 L1={"Google":f1,"DuckDuckGo":f2,"Bing":f3,"YouTube":f4,"Ebay":f5}
 @app.get('/scraper')
-def g1(request:Request,response:Response,keyword:str):
-    x=keyword.replace(' ','')
-    if(x==''):
-        response.status_code = status.HTTP_400_BAD_REQUEST
-        return templates.TemplateResponse(request,"message.html",
-               {"message":"ERROR: No Data For Blank Keyword!",'status_code':status.HTTP_400_BAD_REQUEST})
-        
+def g1(request:Request,keyword:str):
+    keyword.replace(" ","")
     print("Executing g1...")
     global result
     global timestamp
     global keyword_
     global L1
-    
+     
     keyword_ = keyword
     result=dict()
     x1,x2=str(datetime.now()).split()
@@ -258,7 +254,13 @@ def g1(request:Request,response:Response,keyword:str):
             
     #return temp #For API
     df=pd.DataFrame(temp)
-    return templates.TemplateResponse(request,"result.html",{"df":df,"timestamp":timestamp,"a":a,"L1":L1})     
+    e=L1.keys()
+    e=list(e)
+    print(e)
+    #return templates.TemplateResponse(request,"result.html",{"df":df,"timestamp":timestamp,"a":a,"L1":L1})
+    #return temp
+    print({"websites":e,"max_row":a,"data":temp})
+    return {"websites":e,"max_row":a,"data":temp}
 
 
 @app.post('/scraper/saveToDB',response_model=dict,status_code=201) 
@@ -277,7 +279,7 @@ def g2(request:Request,response:Response):
                     table=db.table(name="scraped_data")
                     table.insert(data)
                
-            message="Your Scraped Data Have Been Saved Successfully!"
+            message="Last Scraped Data Have Been Saved Successfully!"
             response.status_code=status.HTTP_201_CREATED
             
     else:
@@ -298,20 +300,33 @@ def g3(request:Request):
     with open("scraper_db.json","r") as db:
         message=js.load(db)
     
-    #return message #FOR API
-#     print(message)
-    return templates.TemplateResponse(request,"db_output.html",
-               {"message":message,'status_code':200})
+    x = copy.deepcopy(message["scraped_data"])
+    for i in x:
+        temp=copy.deepcopy(message["scraped_data"][i])
+        del message["scraped_data"][i]
+        message["keyword: "+temp["keyword"]+" "+temp["datetime"]] = temp['scraped_data'][0]
+        
+    del message['scraped_data']
+    print(message)
+    return [message]
             
  
 @app.delete("/db/delete/{keyword}/{datetime}",status_code=204)
-def g4(request:Request,keyword:str,datetime:str):
+def g4(request:Request,response:Response,keyword:str,datetime:str):
     print("Executing g4...")
     global result
     result=dict()
+    x=Query()
     with TinyDB("scraper_db.json",indent=4) as db:
          table=db.table(name="scraped_data")
-         table.remove(where('keyword')==keyword and where('datetime') == datetime)
+         query_response=table.get(x.keyword==keyword and x.datetime==datetime)
+         print("query_response = ",query_response)
+         if(len(query_response)==0):
+             response.status_code=404
+             print(f"{keyword} {datetime} is not present in database")
+         else:
+            table.remove(where('keyword')==keyword and where('datetime') == datetime)
+            print(f"Successfully deleted {keyword} {datetime}!")
              
 #     return templates.TemplateResponse(request,"message.html",
 #                {"message":"Keyword  '"+str(keyword)+"'  With Timestamp:  "+str(datetime) +" have been deleted successfully",'status_code':'204'})
