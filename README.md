@@ -1,8 +1,8 @@
 <b><big>KEYWORD  SCRAPER</big></b>
 
 
-This Project Scrape Suggested Search From Different Websites For A Given Keyword  <br>
-To Run This Project As A Docker Container In Detach Mode Use Following Docker Commands In This Directory:  <br>
+This project scrape suggested search from different websites for a given keyword.  <br>
+To run this project as a docker container in detach mode use following docker commands in clone this directory:  <br>
 ```    
        docker build -t scraper4:13 .
        docker run  --name scraper413  -d -p8000:8000  scraper4:13
