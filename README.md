@@ -2,7 +2,7 @@
 
 
 This project scrape suggested search from different websites for a given keyword.  <br>
-To run this project as a docker container in detach mode use following docker commands in clone this directory:  <br>
+To run this project as a docker container in detach mode use following docker commands in clone of this directory:  <br>
 ```    
        docker build -t scraper4:13 .
        docker run  --name scraper413  -d -p8000:8000  scraper4:13
